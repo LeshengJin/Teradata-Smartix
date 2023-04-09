@@ -2,12 +2,11 @@ from database import Database
 from benchmark import Benchmark
 from state import State
 from action import Action
-from agent import Agent
 
 import json
 import pickle
 import os
-from config import ENV_SAVE_PATH, USE_CHECKPOINT
+from config import ENV_SAVE_PATH
 
 
 class Environment:
@@ -176,20 +175,3 @@ class Environment:
                 + "\n"
             )
 
-
-if __name__ == "__main__":
-    print("In ENV MAIN METHOD")
-
-    env = Environment()
-    agent = Agent()
-    agent.env = env
-    if not USE_CHECKPOINT:
-        agent.state = env.reset()
-        print("env resetted")
-        agent.weights_initialization(agent.state)
-        print("Self weigth initialized")
-    else:
-        agent.env.load()
-        agent.load()
-
-    agent.train()
