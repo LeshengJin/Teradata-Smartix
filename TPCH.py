@@ -36,7 +36,7 @@ class TPCH:
     )
 
     query_texts = [
-        Path(f"/Users/leshengjin/Work/td/td_tpch_queries/{i}.sql").read_text()
+        Path(f"./tpch_queries/{i}.sql").read_text()
         for i in range(1, 23)
     ]
 
