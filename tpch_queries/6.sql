@@ -1,0 +1,10 @@
+/* Query 06 - Var_0 Rev_01 - TPC-H/TPC-R Forecasting Revenue Change Query */
+SELECT
+        SUM(L_EXTENDEDPRICE*L_DISCOUNT (FLOAT)) (DECIMAL(18,2)) AS REVENUE
+FROM
+        LINEITEM
+WHERE
+        L_SHIPDATE >= '1995-01-01'
+        AND L_SHIPDATE < DATE '1995-01-01' + INTERVAL '1' YEAR
+        AND L_DISCOUNT BETWEEN 0.04 - 0.01 AND 0.04 + 0.01
+        AND L_QUANTITY < 25;

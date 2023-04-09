@@ -1,0 +1,32 @@
+/* Query 08 - Var_0 Rev_01 - TPC-H/TPC-R National Market Share Query */
+SELECT
+        EXTRACT(YEAR FROM O_ORDERDATE) AS "YEAR",
+        SUM(CASE
+                WHEN N2.N_NAME = 'UNITED STATES'
+                THEN (L_EXTENDEDPRICE*(1-L_DISCOUNT) (FLOAT))
+                ELSE 0
+        END) / SUM(L_EXTENDEDPRICE*(1-L_DISCOUNT) (FLOAT)) (DECIMAL(18,2)) AS MKT_SHARE
+FROM
+        PARTTBL,
+        SUPPLIER,
+        LINEITEM,
+        ORDERTBL,
+        CUSTOMER,
+        NATION N1,
+        NATION N2,
+        REGION
+WHERE
+        P_PARTKEY = L_PARTKEY
+        AND S_SUPPKEY = L_SUPPKEY
+        AND L_ORDERKEY = O_ORDERKEY
+        AND O_CUSTKEY = C_CUSTKEY
+        AND C_NATIONKEY = N1.N_NATIONKEY
+        AND N1.N_REGIONKEY = R_REGIONKEY
+        AND R_NAME = 'AMERICA'
+        AND S_NATIONKEY = N2.N_NATIONKEY
+        AND O_ORDERDATE BETWEEN '1995-01-01' AND '1996-12-31'
+        AND P_TYPE = 'SMALL ANODIZED TIN'
+GROUP BY
+        "YEAR"
+ORDER BY
+        "YEAR";

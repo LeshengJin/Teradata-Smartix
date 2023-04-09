@@ -1,0 +1,23 @@
+/* Query 03 - Var_0 Rev_01 - TPC-H/TPC-R Shipping Priority Query      */
+SELECT
+        L_ORDERKEY,
+        SUM(L_EXTENDEDPRICE*(1-L_DISCOUNT) (FLOAT)) (DECIMAL(18,2)) AS REVENUE,
+        O_ORDERDATE,
+        O_SHIPPRIORITY
+FROM
+        CUSTOMER,
+        ORDERTBL,
+        LINEITEM
+WHERE
+        C_MKTSEGMENT  = 'FURNITURE'
+        AND C_CUSTKEY    = O_CUSTKEY
+        AND L_ORDERKEY   = O_ORDERKEY
+        AND O_ORDERDATE  < '1995-03-16'
+        AND L_SHIPDATE   > '1995-03-16'
+GROUP BY
+        L_ORDERKEY,
+        O_ORDERDATE,
+        O_SHIPPRIORITY
+ORDER BY
+        REVENUE DESC,
+        O_ORDERDATE;
